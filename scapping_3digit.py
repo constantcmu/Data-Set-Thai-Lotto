@@ -67,12 +67,12 @@ def scappingLotto(url):
                     if "เลขหน้า" in col.text:
                         row['prize_pre_3digit'].append(num.text)
                     elif "เลขท้าย" in col.text:
-                        row['prize_sub_3digits'].append(num.text)
+                        row['prize_sub_3digits'].append(num.text[2:-1])
             
             # Adjust prize_pre_3digit and prize_sub_3digits if necessary
             if len(row['prize_pre_3digit']) < 2 and len(row['prize_sub_3digits']) > 2:
                 row['prize_pre_3digit'] = row['prize_sub_3digits'][:2]
-                row['prize_sub_3digits'] = row['prize_sub_3digits'][2:]
+                row['prize_sub_3digits'] = row['prize_sub_3digits'][2:-1]
 
             # Ensure both lists have exactly 2 elements
             if len(row['prize_pre_3digit']) < 2:
