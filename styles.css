@@ -1,0 +1,45 @@
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+}
+
+#chart {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.circle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    margin: 5px;
+    background-color: lightblue;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+#numbers {
+    margin-top: 20px;
+}
+
+.row {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 10px;
+}
+
+.row span {
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+    margin: 2px;
+    background-color: lightgray;
+    border-radius: 50%;
+    text-align: center;
+    font-weight: bold;
+}
