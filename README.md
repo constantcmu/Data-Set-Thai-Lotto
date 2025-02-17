@@ -17,7 +17,7 @@
 
 # วิธีรัน เพื่อ scapping ข้อมูล
 
-1. รันคำสั่งนี้ใน Commandline เพื่อสร้าง venc
+1. รันคำสั่งนี้ใน Commandline เพื่อสร้าง venv
 
 ```shell
 python -m venv venv  

@@ -1,8 +1,30 @@
-import requests
-from bs4 import BeautifulSoup
+import subprocess
+import sys
+import concurrent.futures  # เพิ่มการนำเข้า concurrent.futures
+
+def install(package):
+    subprocess.check_call([sys.executable, "-m", "pip", "install", package])
+
+try:
+    import requests
+except ImportError:
+    install('requests')
+    import requests
+
+try:
+    from bs4 import BeautifulSoup
+except ImportError:
+    install('beautifulsoup4')
+    from bs4 import BeautifulSoup
+
+try:
+    import pandas as pd
+except ImportError:
+    install('pandas')
+    import pandas as pd
+
 from dataclasses import dataclass
 from typing import List
-import pandas as pd
 import os
 from datetime import datetime
 
@@ -14,10 +36,19 @@ class ArchivePage:
 
 
 def getArchivePage(url):
+    """
+    ดึงหน้า archive และดึงรายการ URL ของลอตเตอรี่และ URL ของหน้าถัดไป
+    
+    Args:
+        url (str): URL ของหน้า archive
+    
+    Returns:
+        ArchivePage: วัตถุที่มีรายการ URL ของลอตเตอรี่และ URL ของหน้าถัดไป
+    """
     print(f"Page = {url}")
-    response = requests.get(url)
+    response = requests.get(url)  # ส่งคำขอ HTTP GET ไปยัง URL
     if response.status_code == 200:
-        soup = BeautifulSoup(response.text, 'html.parser')
+        soup = BeautifulSoup(response.text, 'html.parser')  # แปลง HTML เป็นวัตถุ BeautifulSoup
         nextPageUrl = ""
         lotto = []
         for link in soup.find_all('a', class_='pagination__item--next'):
@@ -38,7 +69,16 @@ def getArchivePage(url):
 
 
 def getDate(url):
-    d = url.split("/")
+    """
+    ดึงและจัดรูปแบบวันที่จาก URL ที่ให้มา
+    
+    Args:
+        url (str): URL ที่มีข้อมูลวันที่
+    
+    Returns:
+        str: วันที่ที่จัดรูปแบบในรูปแบบ 'YYYY-MM-DD'
+    """
+    d = url.split("/")  # แยก URL ด้วยเครื่องหมาย "/"
 
     while ("" in d):
         d.remove("")
@@ -50,11 +90,20 @@ def getDate(url):
 
 
 def scappingLotto(url):
+    """
+    ดึงผลลอตเตอรี่จาก URL ที่ให้มาและส่งคืนข้อมูลเป็นพจนานุกรม
+    
+    Args:
+        url (str): URL ของหน้าผลลอตเตอรี่
+    
+    Returns:
+        dict: พจนานุกรมที่มีผลลอตเตอรี่
+    """
     if url == 'https://news.sanook.com/lotto/check/ผลสลากกินแบ่งรัฐบาลงวดประจำวันที่1สิงหาคม2552/':
         # แก้ไข เฉพาะลิงค์นี้ เพราะหน้าเว็ปสนุก ให้ URL  มาไม่ถูกต้อง
         url = 'https://news.sanook.com/lotto/check/01082552/'
 
-    response = requests.get(url)
+    response = requests.get(url)  # ส่งคำขอ HTTP GET ไปยัง URL
     date = getDate(url)
     print(f'{date} = {url}')
 
@@ -72,7 +121,7 @@ def scappingLotto(url):
     }
 
     if response.status_code == 200:
-        soup = BeautifulSoup(response.text, 'html.parser')
+        soup = BeautifulSoup(response.text, 'html.parser')  # แปลง HTML เป็นวัตถุ BeautifulSoup
 
         columns = soup.find_all('div', class_='lottocheck__column')
         if columns:
@@ -181,15 +230,18 @@ if os.path.exists('lotto.parquet'):
 while True:
     archive = getArchivePage(archive_url)
 
-    for page in archive.archiveList:
-        new_row = scappingLotto(page)
+    # ใช้ ThreadPoolExecutor เพื่อดึงข้อมูลแบบขนาน
+    with concurrent.futures.ThreadPoolExecutor() as executor:
+        results = list(executor.map(scappingLotto, archive.archiveList))
+
+    for new_row in results:
         newDf = pd.DataFrame([new_row])
-        df = pd.concat([df, newDf], ignore_index=True)
-        newDf.to_csv('lotto.csv', mode='a', index=False, header=header)
+        df = pd.concat([df, newDf], ignore_index=True)  # รวม DataFrame ใหม่เข้ากับ DataFrame เดิม
+        newDf.to_csv('lotto.csv', mode='a', index=False, header=header)  # บันทึก DataFrame ลงไฟล์ CSV
         header = False
 
     if archive.nextPageUrl == "":
-        df.to_parquet('lotto.parquet', index=False)
+        df.to_parquet('lotto.parquet', index=False)  # บันทึก DataFrame ลงไฟล์ Parquet
         break
     else:
         archive_url = archive.nextPageUrl
