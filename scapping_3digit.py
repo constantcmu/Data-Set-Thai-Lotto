@@ -60,25 +60,23 @@ def scappingLotto(url):
 
     if response.status_code == 200:
         soup = BeautifulSoup(response.text, 'html.parser')
-        columns = soup.find_all('div', class_='lottocheck__column')
+        columns = soup.find_all('div', class_='lottocheck__column') 
         if columns:
             for col in columns:
                 for num in col.find_all('strong'):
                     if "เลขหน้า" in col.text:
                         row['prize_pre_3digit'].append(num.text)
                     elif "เลขท้าย" in col.text:
-                        row['prize_sub_3digits'].append(num.text[2:-1])
+                        row['prize_sub_3digits'].append(num.text)
             
             # Adjust prize_pre_3digit and prize_sub_3digits if necessary
             if len(row['prize_pre_3digit']) < 2 and len(row['prize_sub_3digits']) > 2:
                 row['prize_pre_3digit'] = row['prize_sub_3digits'][:2]
-                row['prize_sub_3digits'] = row['prize_sub_3digits'][2:-1]
+                row['prize_sub_3digits'] = row['prize_sub_3digits'][2:]
 
             # Ensure both lists have exactly 2 elements
-            if len(row['prize_pre_3digit']) < 2:
-                row['prize_pre_3digit'].extend([''] * (2 - len(row['prize_pre_3digit'])))
-            if len(row['prize_sub_3digits']) < 2:
-                row['prize_sub_3digits'].extend([''] * (2 - len(row['prize_sub_3digits'])))
+            row['prize_pre_3digit'].extend([''] * (2 - len(row['prize_pre_3digit'])))
+            row['prize_sub_3digits'].extend([''] * (2 - len(row['prize_sub_3digits'])))
 
             return row
     else:

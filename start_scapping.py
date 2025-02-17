@@ -1,8 +1,29 @@
-import requests
-from bs4 import BeautifulSoup
+import subprocess
+import sys
+
+def install(package):
+    subprocess.check_call([sys.executable, "-m", "pip", "install", package])
+
+try:
+    import requests
+except ImportError:
+    install('requests')
+    import requests
+
+try:
+    from bs4 import BeautifulSoup
+except ImportError:
+    install('beautifulsoup4')
+    from bs4 import BeautifulSoup
+
+try:
+    import pandas as pd
+except ImportError:
+    install('pandas')
+    import pandas as pd
+
 from dataclasses import dataclass
 from typing import List
-import pandas as pd
 import os
 from datetime import datetime
 import concurrent.futures
