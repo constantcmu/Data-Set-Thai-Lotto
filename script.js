@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', function () {
-    fetch('lotto_prize_combined.csv')
+    fetch('./lotto_prize_combined.csv')
         .then(response => response.text())
         .then(data => {
             const rows = data.split('\n').slice(1);
