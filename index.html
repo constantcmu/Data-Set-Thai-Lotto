@@ -6,9 +6,10 @@
     <title>Prize 2 Digits Frequency</title>
     <link rel="stylesheet" href="styles.css">
     <script src="https://d3js.org/d3.v7.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
-    <div id="nav-bar">
+    <!-- <div id="nav-bar">
         <input type="checkbox" id="nav-toggle">
         <div id="nav-header">
             <a id="nav-title" href="https://codepen.io" target="_blank">
@@ -43,11 +44,12 @@
             </div>
             <div id="nav-footer-content"></div>
         </div>
-    </div>
+    </div> -->
     </div>
     <div class="content">
         <h1>Prize 2 Digits Frequency</h1>
         <div id="chart"></div>
+        <canvas id="prize2DigitsChart" width="400" height="200"></canvas>
         
         <label class="switch">
             <input type="checkbox" id="input">
@@ -142,6 +144,7 @@
         </div>
     </div>
     <script src="script_fill.js"></script>
+    <script src="script_getCSV.js"></script>
     <script>
         const toggleSwitch = document.getElementById('input');
         const body = document.body;
@@ -196,6 +199,27 @@
             svg.append("g")
                 .attr("class", "y-axis")
                 .call(d3.axisLeft(y));
+        });
+
+        // Create bar charts under each number
+        d3.csv("data.csv").then(data => {
+            data.forEach(d => {
+                d.frequency = +d.frequency;
+            });
+
+            const rows = d3.selectAll("#numbers .row");
+            rows.each(function() {
+                const row = d3.select(this);
+                const numbers = row.selectAll("span").data(data, d => d.number);
+
+                numbers.enter()
+                    .append("div")
+                    .attr("class", "bar")
+                    .style("height", d => `${d.frequency * 10}px`)
+                    .style("width", "10px")
+                    .style("background-color", "steelblue")
+                    .style("margin", "2px");
+            });
         });
     </script>
 </body>
