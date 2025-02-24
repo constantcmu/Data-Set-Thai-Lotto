@@ -53,11 +53,12 @@ document.addEventListener('DOMContentLoaded', function() {
             const num = number.textContent;
             if (prize2DigitsCount[num]) {
                 let color;
-                if (prize2DigitsCount[num] > 8) {
-                    color = 'red';
-                } else if (prize2DigitsCount[num] >= 1) {
+                // if (prize2DigitsCount[num] > 8) {
+                //     color = 'red';
+                // } else 
+                if (prize2DigitsCount[num] ) {
                     const clarity = prize2DigitsCount[num] / 8; // Normalize to range 0-1
-                    color = `rgba(255, 255, 0, ${clarity})`; // Yellow color with varying clarity
+                    color = `rgba(250, 80, 80, ${clarity})`; // Yellow color with varying clarity
                 } else {
                     color = 'transparent'; // Default color if not in range
                 }
