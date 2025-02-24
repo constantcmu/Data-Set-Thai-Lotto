@@ -51,7 +51,23 @@ body {
     font-weight: bold;
 }
 
-/* From Uiverse.io by RiccardoRapelli */
+.number {
+    position: relative;
+}
+
+.number:hover::after {
+    content: attr(data-frequency);
+    position: absolute;
+    top: -25px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: black;
+    font-size: 14px;
+    font-weight: bold;
+    white-space: nowrap;
+    text-shadow: 0 0 5px rgba(255, 255, 255, 0.8);
+}
+
 .switch {
     position: absolute;
     top: 10px;
@@ -673,3 +689,4 @@ label[for="nav-footer-toggle"] {
   border-radius: 99px;
   background-color: #D62929;
 }
+
