@@ -8,11 +8,66 @@
 </head>
 <body>
     <h1>Prize 1st Frequency</h1>
-    <!-- ...existing code... -->
+    <button id="toggle-sidebar">
+        <i class="fas fa-chevron-left"></i>
+    </button>
+    
+    <div id="nav-bar">
+        <input type="checkbox" id="nav-toggle">
+        <div id="nav-header">
+            <a id="nav-title" href="index.html">
+                <i class="fas fa-chart-line"></i> ThaiLotto Stats
+            </a>
+            <label for="nav-toggle">
+                <span id="nav-toggle-burger"></span>
+            </label>
+            <hr>
+        </div>
+        <div id="nav-content">
+            <div class="nav-button"><a href="index.html"><i class="fas fa-home"></i><span>หน้าหลัก</span></a></div>
+            <div class="nav-button"><a href="2_prize_1st.html"><i class="fas fa-trophy"></i><span>รางวันที่ 1</span></a></div>
+            <div class="nav-button"><i class="fas fa-medal"></i><span>ข้างเคียงรางวันที่ 1</span></div>
+            <div class="nav-button"><a href="1_Prize_2_Digits_Frequency.html"><i class="fas fa-sort-numeric-down"></i><span>เลขท้าย 2 ตัว</span></a></div>
+            <div class="nav-button"><i class="fas fa-sort-numeric-up"></i><span>เลข หน้า-หลัง 3 ตัว</span></div>
+            <hr>
+            <div class="nav-button"><i class="fas fa-award"></i><span>รางวันที่ 2</span></div>
+            <div class="nav-button"><i class="fas fa-award"></i><span>รางวันที่ 3</span></div>
+            <div class="nav-button"><i class="fas fa-award"></i><span>รางวันที่ 4</span></div>
+            <div class="nav-button"><i class="fas fa-award"></i><span>รางวันที่ 5</span></div>
+            <div id="nav-content-highlight"></div>
+        </div>
+        <input type="checkbox" id="nav-footer-toggle">
+        <div id="nav-footer">
+            <div id="nav-footer-heading">
+                <label for="nav-footer-toggle">
+                    <i class="fas fa-caret-up"></i>
+                </label>
+            </div>
+            <div id="nav-footer-content"></div>
+        </div>
+    </div>
+    
+    <!-- ...existing content... -->
+    
     <script>
-        // ...existing code...
-        // Update the data source and processing logic for 2 Prize 1st Frequency
-        // ...existing code...
+        // ...existing script...
+        
+        // Add sidebar toggle functionality
+        const toggleSidebarBtn = document.getElementById('toggle-sidebar');
+        const toggleIcon = toggleSidebarBtn.querySelector('i');
+        
+        toggleSidebarBtn.addEventListener('click', () => {
+            document.body.classList.toggle('sidebar-collapsed');
+            
+            // Change icon based on sidebar state
+            if (document.body.classList.contains('sidebar-collapsed')) {
+                toggleIcon.classList.remove('fa-chevron-left');
+                toggleIcon.classList.add('fa-chevron-right');
+            } else {
+                toggleIcon.classList.remove('fa-chevron-right');
+                toggleIcon.classList.add('fa-chevron-left');
+            }
+        });
     </script>
 </body>
 </html>

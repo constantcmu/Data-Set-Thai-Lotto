@@ -8,6 +8,7 @@
     <script src="https://d3js.org/d3.v7.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
     <button id="toggle-sidebar">
@@ -58,41 +59,76 @@
                     <input type="checkbox" id="input">
                     <div class="slider round">
                         <div class="sun-moon">
-                            <div class="sun">
-                                <div class="ray r1"></div>
-                                <div class="ray r2"></div>
-                                <div class="ray r3"></div>
-                                <div class="ray r4"></div>
-                                <div class="ray r5"></div>
-                                <div class="ray r6"></div>
-                                <div class="ray r7"></div>
-                                <div class="ray r8"></div>
-                            </div>
-                            <div class="moon"></div>
+                            <svg id="moon-dot-1" class="moon-dot" viewBox="0 0 100 100">
+                                <circle cx="50" cy="50" r="50"></circle>
+                            </svg>
+                            <svg id="moon-dot-2" class="moon-dot" viewBox="0 0 100 100">
+                                <circle cx="50" cy="50" r="50"></circle>
+                            </svg>
+                            <svg id="moon-dot-3" class="moon-dot" viewBox="0 0 100 100">
+                                <circle cx="50" cy="50" r="50"></circle>
+                            </svg>
+                            <svg id="light-ray-1" class="light-ray" viewBox="0 0 100 100">
+                                <circle cx="50" cy="50" r="50"></circle>
+                            </svg>
+                            <svg id="light-ray-2" class="light-ray" viewBox="0 0 100 100">
+                                <circle cx="50" cy="50" r="50"></circle>
+                            </svg>
+                            <svg id="light-ray-3" class="light-ray" viewBox="0 0 100 100">
+                                <circle cx="50" cy="50" r="50"></circle>
+                            </svg>
+        
+                            <svg id="cloud-1" class="cloud-dark" viewBox="0 0 100 100">
+                                <circle cx="50" cy="50" r="50"></circle>
+                            </svg>
+                            <svg id="cloud-2" class="cloud-dark" viewBox="0 0 100 100">
+                                <circle cx="50" cy="50" r="50"></circle>
+                            </svg>
+                            <svg id="cloud-3" class="cloud-dark" viewBox="0 0 100 100">
+                                <circle cx="50" cy="50" r="50"></circle>
+                            </svg>
+                            <svg id="cloud-4" class="cloud-light" viewBox="0 0 100 100">
+                                <circle cx="50" cy="50" r="50"></circle>
+                            </svg>
+                            <svg id="cloud-5" class="cloud-light" viewBox="0 0 100 100">
+                                <circle cx="50" cy="50" r="50"></circle>
+                            </svg>
+                            <svg id="cloud-6" class="cloud-light" viewBox="0 0 100 100">
+                                <circle cx="50" cy="50" r="50"></circle>
+                            </svg>
                         </div>
                         <div class="stars">
-                            <div class="star s1"></div>
-                            <div class="star s2"></div>
-                            <div class="star s3"></div>
-                            <div class="star s4"></div>
-                            <div class="star s5"></div>
+                            <svg id="star-1" class="star" viewBox="0 0 20 20">
+                                <path d="M 0 10 C 10 10,10 10 ,0 10 C 10 10 , 10 10 , 10 20 C 10 10 , 10 10 , 20 10 C 10 10 , 10 10 , 10 0 C 10 10,10 10 ,0 10 Z"></path>
+                            </svg>
+                            <svg id="star-2" class="star" viewBox="0 0 20 20">
+                                <path d="M 0 10 C 10 10,10 10 ,0 10 C 10 10 , 10 10 , 10 20 C 10 10 , 10 10 , 20 10 C 10 10 , 10 10 , 10 0 C 10 10,10 10 ,0 10 Z"></path>
+                            </svg>
+                            <svg id="star-3" class="star" viewBox="0 0 20 20">
+                                <path d="M 0 10 C 10 10,10 10 ,0 10 C 10 10 , 10 10 , 10 20 C 10 10 , 10 10 , 20 10 C 10 10 , 10 10 , 10 0 C 10 10,10 10 ,0 10 Z"></path>
+                            </svg>
+                            <svg id="star-4" class="star" viewBox="0 0 20 20">
+                                <path d="M 0 10 C 10 10,10 10 ,0 10 C 10 10 , 10 10 , 10 20 C 10 10 , 10 10 , 20 10 C 10 10 , 10 10 , 10 0 C 10 10,10 10 ,0 10 Z"></path>
+                            </svg>
                         </div>
                     </div>
                 </label>
+        
             </div>
         </div>
         
-        <div class="dashboard-container">
-            <div class="card">
-                <div class="card-header">
-                    <h2>ความถี่เลขท้าย 2 ตัว</h2>
-                    <div class="card-controls">
-                        <button class="btn btn-small" id="show-table"><i class="fas fa-table"></i></button>
-                        <button class="btn btn-small" id="show-chart"><i class="fas fa-chart-bar"></i></button>
-                    </div>
-                </div>
-                <div id="chart" class="card-body"></div>
+        <!-- เพิ่มส่วนแสดงกราฟความถี่เลขท้าย 2 ตัว -->
+        <div class="chart-container">
+            <h2>ความถี่เลขท้าย 2 ตัว</h2>
+            <div class="chart-wrapper">
+                <canvas id="two-digits-frequency-chart"></canvas>
             </div>
+            <div class="chart-legend">
+                <p>กราฟแสดงความถี่การออกรางวัลเลขท้าย 2 ตัว</p>
+                <a href="1_Prize_2_Digits_Frequency.html" class="btn">ดูรายละเอียดเพิ่มเติม</a>
+            </div>
+        </div>
+
             
             <div class="card">
                 <div class="card-header">
@@ -153,6 +189,103 @@
                 toggleIcon.classList.remove('fa-chevron-right');
                 toggleIcon.classList.add('fa-chevron-left');
             }
+        });
+        
+        // เพิ่มโค้ดสำหรับสร้างกราฟความถี่เลขท้าย 2 ตัว
+        document.addEventListener('DOMContentLoaded', function() {
+            // ดึงข้อมูลจาก CSV
+            fetch('CSV_lotto/lotto_prize_combined.csv')
+                .then(response => response.text())
+                .then(data => {
+                    // แปลงข้อมูล CSV เป็น Array
+                    const rows = data.split('\n');
+                    const headers = rows[0].split(',');
+                    
+                    // หาตำแหน่งคอลัมน์ prize_2digits
+                    const prize2DigitsIndex = headers.findIndex(h => h.trim() === 'prize_2digits');
+                    
+                    // เก็บข้อมูลความถี่
+                    const frequencyData = {};
+                    for (let i = 1; i < rows.length; i++) {
+                        if (!rows[i]) continue;
+                        
+                        const cols = rows[i].split(',');
+                        if (cols.length > prize2DigitsIndex) {
+                            // ดึงข้อมูลเลขท้าย 2 ตัว
+                            let prize2Digits = cols[prize2DigitsIndex].trim();
+                            
+                            // ทำความสะอาดข้อมูล (ลบ [ ] ' และช่องว่าง)
+                            prize2Digits = prize2Digits.replace(/[\[\]']/g, '').trim();
+                            
+                            // แยกเลขแต่ละตัว
+                            const numbers = prize2Digits.split(/,\s*/);
+                            
+                            // นับความถี่
+                            numbers.forEach(num => {
+                                if (num) {
+                                    frequencyData[num] = (frequencyData[num] || 0) + 1;
+                                }
+                            });
+                        }
+                    }
+                    
+                    // เตรียมข้อมูลสำหรับกราฟ
+                    const labels = Object.keys(frequencyData).sort((a, b) => a.localeCompare(b));
+                    const frequencies = labels.map(label => frequencyData[label]);
+                    
+                    // สีสำหรับกราฟแท่ง
+                    const backgroundColors = frequencies.map(freq => 
+                        freq > 5 ? 'rgba(255, 99, 132, 0.8)' : 'rgba(54, 162, 235, 0.8)'
+                    );
+                    
+                    // สร้างกราฟ
+                    const ctx = document.getElementById('two-digits-frequency-chart').getContext('2d');
+                    const chart = new Chart(ctx, {
+                        type: 'bar',
+                        data: {
+                            labels: labels,
+                            datasets: [{
+                                label: 'ความถี่เลขท้าย 2 ตัว',
+                                data: frequencies,
+                                backgroundColor: backgroundColors,
+                                borderColor: 'rgba(0, 0, 0, 0.2)',
+                                borderWidth: 1
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: false,
+                            scales: {
+                                y: {
+                                    beginAtZero: true,
+                                    title: {
+                                        display: true,
+                                        text: 'ความถี่'
+                                    }
+                                },
+                                x: {
+                                    title: {
+                                        display: true,
+                                        text: 'เลข 2 ตัว'
+                                    }
+                                }
+                            },
+                            plugins: {
+                                tooltip: {
+                                    callbacks: {
+                                        title: function(context) {
+                                            return 'เลข: ' + context[0].label;
+                                        },
+                                        label: function(context) {
+                                            return 'ความถี่: ' + context.parsed.y + ' ครั้ง';
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    });
+                })
+                .catch(error => console.error('Error loading the CSV file:', error));
         });
     </script>
 </body>

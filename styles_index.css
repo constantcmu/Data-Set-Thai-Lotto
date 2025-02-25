@@ -45,3 +45,223 @@ footer {
     width: 100%;
     bottom: 0;
 }
+.switch {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    display: inline-block;
+    width: 40px;
+    height: 20px;
+}
+
+.switch #input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #2196f3;
+    -webkit-transition: 0.4s;
+    transition: 0.4s;
+    z-index: 0;
+    overflow: hidden;
+}
+
+.sun-moon {
+    position: absolute;
+    content: "";
+    height: 16px;
+    width: 16px;
+    left: 2px;
+    bottom: 2px;
+    background-color: yellow;
+    -webkit-transition: 0.4s;
+    transition: 0.4s;
+}
+
+#input:checked + .slider {
+    background-color: black;
+}
+
+#input:focus + .slider {
+    box-shadow: 0 0 1px #2196f3;
+}
+
+#input:checked + .slider .sun-moon {
+    -webkit-transform: translateX(20px);
+    -ms-transform: translateX(20px);
+    transform: translateX(20px);
+    background-color: white;
+}
+
+.moon-dot {
+    opacity: 0;
+    transition: 0.4s;
+    fill: gray;
+}
+
+#input:checked + .slider .sun-moon .moon-dot {
+    opacity: 1;
+}
+
+.slider.round {
+    border-radius: 20px;
+}
+
+.slider.round .sun-moon {
+    border-radius: 50%;
+}
+
+#moon-dot-1 {
+    left: 5px;
+    top: 1.5px;
+    position: absolute;
+    width: 3px;
+    height: 3px;
+    z-index: 4;
+}
+
+#moon-dot-2 {
+    left: 1px;
+    top: 5px;
+    position: absolute;
+    width: 5px;
+    height: 5px;
+    z-index: 4;
+}
+
+#moon-dot-3 {
+    left: 8px;
+    top: 9px;
+    position: absolute;
+    width: 1.5px;
+    height: 1.5px;
+    z-index: 4;
+}
+
+#light-ray-1 {
+    left: -4px;
+    top: -4px;
+    position: absolute;
+    width: 21.5px;
+    height: 21.5px;
+    z-index: -1;
+    fill: white;
+    opacity: 10%;
+}
+
+#light-ray-2 {
+    left: -25%;
+    top: -25%;
+    position: absolute;
+    width: 27.5px;
+    height: 27.5px;
+    z-index: -1;
+    fill: white;
+    opacity: 10%;
+}
+
+#light-ray-3 {
+    left: -9px;
+    top: -9px;
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    z-index: -1;
+    fill: white;
+    opacity: 10%;
+}
+
+.cloud-light {
+    position: absolute;
+    fill: #eee;
+    animation-name: cloud-move;
+    animation-duration: 6s;
+    animation-iteration-count: infinite;
+}
+
+.cloud-dark {
+    position: absolute;
+    fill: #ccc;
+    animation-name: cloud-move;
+    animation-duration: 6s;
+    animation-iteration-count: infinite;
+    animation-delay: 1s;
+}
+
+#cloud-1 {
+    left: 15px;
+    top: 7.5px;
+    width: 20px;
+}
+
+#cloud-2 {
+    left: 22px;
+    top: 5px;
+    width: 10px;
+}
+
+#cloud-3 {
+    left: 9px;
+    top: 12px;
+    width: 15px;
+}
+
+#cloud-4 {
+    left: 18px;
+    top: 9px;
+    width: 20px;
+}
+
+#cloud-5 {
+    left: 24px;
+    top: 7px;
+    width: 10px;
+}
+
+#cloud-6 {
+    left: 11px;
+    top: 13px;
+    width: 15px;
+}
+
+@keyframes cloud-move {
+    0% {
+        transform: translateX(0px);
+    }
+
+    40% {
+        transform: translateX(2px);
+    }
+
+    80% {
+        transform: translateX(-2px);
+    }
+
+    100% {
+        transform: translateX(0px);
+    }
+}
+
+.stars {
+    transform: translateY(-16px);
+    opacity: 0;
+    transition: 0.4s;
+}
+
+.star {
+    fill: white;
+    position: absolute;
+    -webkit-transition: 0.4s;
+    transition: 0.4s;
+    animation-name: star-twinkle;
+    animation-duration: 2s;
+    animation-iteration-count: infinite;
+}
