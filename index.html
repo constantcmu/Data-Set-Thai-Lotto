@@ -3,36 +3,157 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Thai Lotto Home</title>
+    <title>ระบบวิเคราะห์สถิติหวย | Thai Lotto Analysis</title>
     <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="styles_index.css">
     <script src="https://d3js.org/d3.v7.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 </head>
 <body>
-    <header>
-        <h1>Thai Lotto Data Set</h1>
-    </header>
-    <nav>
-        <ul>
-            <li><a href="prize_1st.html">Prize 1st</a></li>
-            <li><a href="prize_2digits.html">Prize 2 Digits</a></li>
-            <li><a href="prize_pre_3digit.html">Prize Pre 3 Digits</a></li>
-            <li><a href="prize_sub_3digits.html">Prize Sub 3 Digits</a></li>
-            <li><a href="prize_2nd.html">Prize 2nd</a></li>
-            <li><a href="prize_3rd.html">Prize 3rd</a></li>
-            <li><a href="prize_4th.html">Prize 4th</a></li>
-            <li><a href="prize_5th.html">Prize 5th</a></li>
-        </ul>
-    </nav>
-    <main>
-        <section>
-            <h2>Welcome to the Thai Lotto Data Set</h2>
-            <p>Select a prize category from the navigation menu to view the frequency data.</p>
-        </section>
-    </main>
-    <footer>
-        <p>&copy; 2023 Thai Lotto Data Set</p>
+    <button id="toggle-sidebar">
+        <i class="fas fa-chevron-left"></i>
+    </button>
+    
+    <div id="nav-bar">
+        <input type="checkbox" id="nav-toggle">
+        <div id="nav-header">
+            <a id="nav-title" href="index.html">
+                <i class="fas fa-chart-line"></i> ThaiLotto Stats
+            </a>
+            <label for="nav-toggle">
+                <span id="nav-toggle-burger"></span>
+            </label>
+            <hr>
+        </div>
+        <div id="nav-content">
+            <div class="nav-button"><a href="index.html"><i class="fas fa-home"></i><span>หน้าหลัก</span></a></div>
+            <div class="nav-button"><a href="2_prize_1st.html"><i class="fas fa-trophy"></i><span>รางวันที่ 1</span></a></div>
+            <div class="nav-button"><i class="fas fa-medal"></i><span>ข้างเคียงรางวันที่ 1</span></div>
+            <div class="nav-button"><a href="1_Prize_2_Digits_Frequency.html"><i class="fas fa-sort-numeric-down"></i><span>เลขท้าย 2 ตัว</span></a></div>
+            <div class="nav-button"><i class="fas fa-sort-numeric-up"></i><span>เลข หน้า-หลัง 3 ตัว</span></div>
+            <hr>
+            <div class="nav-button"><i class="fas fa-award"></i><span>รางวันที่ 2</span></div>
+            <div class="nav-button"><i class="fas fa-award"></i><span>รางวันที่ 3</span></div>
+            <div class="nav-button"><i class="fas fa-award"></i><span>รางวันที่ 4</span></div>
+            <div class="nav-button"><i class="fas fa-award"></i><span>รางวันที่ 5</span></div>
+            <div id="nav-content-highlight"></div>
+        </div>
+        <input type="checkbox" id="nav-footer-toggle">
+        <div id="nav-footer">
+            <div id="nav-footer-heading">
+                <label for="nav-footer-toggle">
+                    <i class="fas fa-caret-up"></i>
+                </label>
+            </div>
+            <div id="nav-footer-content"></div>
+        </div>
+    </div>
+    
+    <div class="content">
+        <div class="header-container">
+            <h1><i class="fas fa-chart-bar"></i> ระบบวิเคราะห์สถิติหวย</h1>
+            
+            <div class="theme-toggle">
+                <label class="switch">
+                    <input type="checkbox" id="input">
+                    <div class="slider round">
+                        <div class="sun-moon">
+                            <div class="sun">
+                                <div class="ray r1"></div>
+                                <div class="ray r2"></div>
+                                <div class="ray r3"></div>
+                                <div class="ray r4"></div>
+                                <div class="ray r5"></div>
+                                <div class="ray r6"></div>
+                                <div class="ray r7"></div>
+                                <div class="ray r8"></div>
+                            </div>
+                            <div class="moon"></div>
+                        </div>
+                        <div class="stars">
+                            <div class="star s1"></div>
+                            <div class="star s2"></div>
+                            <div class="star s3"></div>
+                            <div class="star s4"></div>
+                            <div class="star s5"></div>
+                        </div>
+                    </div>
+                </label>
+            </div>
+        </div>
+        
+        <div class="dashboard-container">
+            <div class="card">
+                <div class="card-header">
+                    <h2>ความถี่เลขท้าย 2 ตัว</h2>
+                    <div class="card-controls">
+                        <button class="btn btn-small" id="show-table"><i class="fas fa-table"></i></button>
+                        <button class="btn btn-small" id="show-chart"><i class="fas fa-chart-bar"></i></button>
+                    </div>
+                </div>
+                <div id="chart" class="card-body"></div>
+            </div>
+            
+            <div class="card">
+                <div class="card-header">
+                    <h2>โอกาสการออกในงวดถัดไป</h2>
+                </div>
+                <div id="probability-chart" class="card-body"></div>
+            </div>
+            
+            <div class="card">
+                <div class="card-header">
+                    <h2>เลขท้าย 2 ตัวที่ออกล่าสุด</h2>
+                </div>
+                <div class="card-body">
+                    <div id="latest-numbers"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="number-grid-container">
+            <h2>ตารางเลข 2 หลัก</h2>
+            <div id="numbers" class="number-grid">
+                <!-- ...existing number grid... -->
+            </div>
+        </div>
+    </div>
+    
+    <footer class="footer">
+        <div class="footer-content">
+            <p>&copy; 2023 ระบบวิเคราะห์สถิติหวย | Thai Lotto Analysis</p>
+            <div class="social-links">
+                <a href="#"><i class="fab fa-facebook"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-line"></i></a>
+            </div>
+        </div>
     </footer>
+    
+    <script src="script_fill.js"></script>
+    <script>
+        const toggleSwitch = document.getElementById('input');
+        const body = document.body;
+        const toggleSidebarBtn = document.getElementById('toggle-sidebar');
+        const toggleIcon = toggleSidebarBtn.querySelector('i');
+
+        toggleSwitch.addEventListener('change', () => {
+            body.classList.toggle('dark-mode');
+        });
+        
+        // Add sidebar toggle functionality
+        toggleSidebarBtn.addEventListener('click', () => {
+            body.classList.toggle('sidebar-collapsed');
+            
+            // Change icon based on sidebar state
+            if (body.classList.contains('sidebar-collapsed')) {
+                toggleIcon.classList.remove('fa-chevron-left');
+                toggleIcon.classList.add('fa-chevron-right');
+            } else {
+                toggleIcon.classList.remove('fa-chevron-right');
+                toggleIcon.classList.add('fa-chevron-left');
+            }
+        });
+    </script>
 </body>
 </html>
